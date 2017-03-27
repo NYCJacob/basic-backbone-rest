@@ -20,7 +20,13 @@ app.LibraryView = Backbone.View.extend({
         $( '#addBook div' ).children( 'input' ).each( function( i, el ) {
             if( $( el ).val() !== '' )
             {
-                formData[ el.id ] = $( el ).val();
+                // TODO image needs to restrict display dimensions
+                if( el.id === 'coverImage' ){
+                    var fileUrl = window.URL.createObjectURL(el.files[0]);
+                    formData[ el.id ] = fileUrl;
+                }else{
+                    formData[ el.id ] = $( el ).val();
+                }
             }
         });
 
