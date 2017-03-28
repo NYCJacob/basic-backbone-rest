@@ -43,6 +43,10 @@ app.get( '/api', function( request, response ) {
 mongoose.connect( 'mongodb://localhost/library_database' );
 
 //Schemas
+var Keywords = new mongoose.Schema({
+    keyword: String
+});
+
 var Book = new mongoose.Schema({
     title: String,
     author: String,
