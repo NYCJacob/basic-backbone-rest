@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <title>Backbone.js Library</title>
     <link rel="stylesheet" href="css/screen.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
 </head>
 <body>
 <div id="books">
@@ -18,17 +19,7 @@
             <button id="add">Add</button>
         </div>
     </form>
-    <div class="bookContainer">
-        <img src="img/placeholder.png"/>
-        <ul>
-            <li>Title</li>
-            <li>Author</li>
-            <li>Release Date</li>
-            <li>Keywords</li>
-        </ul>
 
-        <button class="delete">Delete</button>
-    </div>
 </div>
 
 <script id="bookTemplate" type="text/template">
@@ -36,14 +27,16 @@
     <ul>
         <li><%= title %></li>
         <li><%= author %></li>
-        <li><%= releaseDate %></li>
-        <li><%= keywords %></li>
+        <li><%= $.format.date( new Date( releaseDate ), 'MMMM yyyy' ) %></li>
+        <li><% _.each( keywords, function( keyobj ) {%> <%= keyobj.keyword %><% } ); %></li>
     </ul>
 
     <button class="delete">Delete</button>
 </script>
 
 <script src="lib/jquery/dist/jquery.min.js"></script>
+<script src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="lib/jquery-dateFormat.min.js"></script>
 <script src="lib/underscore/underscore-min.js"></script>
 <script src="lib/backbone/backbone-min.js"></script>
 <script src="js/models/book.js"></script>

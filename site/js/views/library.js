@@ -30,13 +30,17 @@ app.LibraryView = Backbone.View.extend({
             }
         });
 
-        this.collection.add( new app.Book( formData ) );
+        // this.collection.add( new app.Book( formData ) );  this doesn't persist to the backend
+        this.collection.create( formData );
     },
 
-    initialize: function( initialBooks ) {
-        this.collection = new app.Library( initialBooks );
+    initialize: function() {
+        this.collection = new app.Library();
+        this.collection.fetch({reset: true}); 	// reset will fire reset event when fetch completes
         this.render();
+
         this.listenTo( this.collection, 'add', this.renderBook );
+        this.listenTo( this.collection, 'reset', this.render );  // renders books when fetch completes an resets
     },
 
     // render library by rendering each book in its collection
