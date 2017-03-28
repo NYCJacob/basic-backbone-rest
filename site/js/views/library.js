@@ -18,19 +18,28 @@ app.LibraryView = Backbone.View.extend({
         var formData = {};
 
         $( '#addBook div' ).children( 'input' ).each( function( i, el ) {
-            if( $( el ).val() !== '' )
+            if( $( el ).val() != '' )
             {
-                // TODO image needs to restrict display dimensions
-                if( el.id === 'coverImage' ){
+                if( el.id === 'keywords' ) {
+                    formData[ el.id ] = [];
+                    _.each( $( el ).val().split( ' ' ), function( keyword ) {
+                        formData[ el.id ].push({ 'keyword': keyword });
+                    });
+                } else if( el.id === 'releaseDate' ) {
+                    formData[ el.id ] = $( '#releaseDate' ).datepicker( 'getDate' ).getTime();
+                } else if( el.id === 'coverImage' ) {
+                    // TODO image needs to restrict display dimensions
                     var fileUrl = window.URL.createObjectURL(el.files[0]);
-                    formData[ el.id ] = fileUrl;
-                }else{
+                    formData[el.id] = fileUrl;
+                }
+                else {
                     formData[ el.id ] = $( el ).val();
                 }
             }
+            // Clear input field value
+            $( el ).val('');
         });
 
-        // this.collection.add( new app.Book( formData ) );  this doesn't persist to the backend
         this.collection.create( formData );
     },
 
